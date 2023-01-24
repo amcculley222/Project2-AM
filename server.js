@@ -9,11 +9,14 @@ const app = express();
 
 //include the method-override package place this where you instructor places it
 const methodOverride = require("method-override");
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
 /**
  * Configuration
  */
-const PORT = 3000;
+const PORT = 8888;
 
 /**
  * Controller requires go here ⬇️
@@ -58,9 +61,13 @@ app.get("/", (req, res) => {
   res.render("Index");
 });
 
+app.get("/login", (req, res) => {
+  res.redirect(
+    `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}`
+  );
+});
+
 // Listen on the port
 app.listen(PORT, () => {
   console.log(`listening on port:${PORT} http://localhost:${PORT}/`);
 });
-
-// changes
