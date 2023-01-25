@@ -65,7 +65,7 @@ app.engine("jsx", require("jsx-view-engine").createEngine());
 
 // Index route
 app.get("/", (req, res) => {
-  res.render("Index");
+  res.render("Login");
 });
 
 const generateRandomString = (length) => {
