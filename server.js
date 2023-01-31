@@ -8,19 +8,27 @@ const express = require("express");
 const app = express();
 const querystring = require("querystring");
 const axios = require("axios");
+const apiUrl = "https://api.discogs.com/";
+const Discogs = require("disconnect").Client;
+const session = require("express-session");
+
+app.use(session({ secret: "secretkey" }));
+
+const consumerKey = process.env.Consumer_Key;
+const consumerSecret = process.env.Consumer_Secret;
+
+// const playlistController = require("./controllers/Playlist");
+const searchController = require("./controllers/searchController");
+const songController = require("./controllers/songController");
+// const playlistController = require("./controllers/playlistContoller");
 
 //include the method-override package place this where you instructor places it
 const methodOverride = require("method-override");
-const { stat } = require("fs");
 const { response } = require("express");
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI;
-
 /**
  * Configuration
  */
-const PORT = 8888;
+const PORT = 3000;
 
 /**
  * Controller requires go here ⬇️
@@ -29,14 +37,14 @@ const PORT = 8888;
 //--------------------------------
 
 // Mongoose connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const mdb = require("./mdb");
 
-mongoose.connection.once("open", () => {
+mdb.once("open", () => {
   console.log("connected to mongo");
 });
+
+const db = new Discogs().database();
+db.getRelease(176126, function (err, data) {});
 
 /**
  * Middleware
@@ -50,6 +58,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 // Allow express to recieve the body as json in requests
 app.use(express.json());
+
 /**
  * View engine
  */
@@ -60,103 +69,54 @@ app.engine("jsx", require("jsx-view-engine").createEngine());
  * Controller middlewares go here ⬇️
  */
 
-// const appController = require("./controllers/App");
-// app.use("/", appController);
+app.use("/search", searchController);
+app.use("/song", songController);
 
 // Index route
 app.get("/", (req, res) => {
-  res.render("Login");
+  res.redirect("/song");
 });
 
-const generateRandomString = (length) => {
-  let text = "";
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+// app.get("/authorize", function (req, res) {
+//   var oAuth = new Discogs().oauth();
+//   oAuth.getRequestToken(
+//     consumerKey,
+//     consumerSecret,
+//     `http://localhost:${3000}/callback`,
+//     function (err, requestData) {
+//       // Persist "requestData" here so that the callback handler can
+//       // access it later after returning from the authorize url
+//       req.session.requestData = requestData;
+//       res.redirect(requestData.authorizeUrl);
+//     }
+//   );
+// });
 
-const stateKey = "spotify_auth_state";
+// app.get("/callback", function (req, res) {
+//   var oAuth = new Discogs(req.session.requestData).oauth();
+//   oAuth.getAccessToken(
+//     req.query.oauth_verifier, // Verification code sent back by Discogs
+//     function (err, accessData) {
+//       // Persist "accessData" here for following OAuth calls
+//       req.session.accessData = accessData;
+//       res.redirect("/identify");
+//     }
+//   );
+// });
 
-app.get("/login", (req, res) => {
-  const state = generateRandomString(16);
-  res.cookie(stateKey, state);
+// app.get("/identify", function (req, res) {
+//   var dis = new Discogs(req.session.accessData);
+//   dis.getIdentity(function (err, data) {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       res.render("Playlist");
+//       console.log(data);
+//     }
+//   });
+// });
 
-  const scope = "user-read-private user-read-email";
-
-  const queryParams = querystring.stringify({
-    client_id: CLIENT_ID,
-    response_type: "code",
-    redirect_uri: REDIRECT_URI,
-    state: state,
-    scope: scope,
-  });
-  res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
-});
-
-app.get("/callback", (req, res) => {
-  const code = req.query.code || null;
-
-  axios({
-    method: "post",
-    url: "https://accounts.spotify.com/api/token",
-    data: querystring.stringify({
-      grant_type: "authorization_code",
-      code: code,
-      redirect_uri: REDIRECT_URI,
-    }),
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${new Buffer.from(
-        `${CLIENT_ID}:${CLIENT_SECRET}`
-      ).toString("base64")}`,
-    },
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        const { access_token, refresh_token } = response.data;
-
-        const queryParams = querystring.stringify({
-          access_token,
-          refresh_token,
-        });
-
-        res.redirect(`http://localhost:8888/?${queryParams}`);
-      } else {
-        res.redirect(`/?${querystring.stringify({ error: "invalid token" })}`);
-      }
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
-
-app.get("/refresh_token", (req, res) => {
-  const { refresh_token } = req.query;
-
-  axios({
-    method: "post",
-    url: "https://accounts.spotify.com/api/token",
-    data: querystring.stringify({
-      grant_type: "refresh_token",
-      refresh_token: refresh_token,
-    }),
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${new Buffer.from(
-        `${CLIENT_ID}:${CLIENT_SECRET}`
-      ).toString("base64")}`,
-    },
-  })
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
+// app.use("/playlist", playlistController);
 
 // Listen on the port
 app.listen(PORT, () => {
