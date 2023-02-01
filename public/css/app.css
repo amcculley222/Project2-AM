@@ -90,6 +90,12 @@ input[type="submit"] {
   font-size: 1em;
   width: auto;
 }
+input[type="show"] {
+  padding: 0.3em;
+  color: White;
+  font-size: 1em;
+  width: auto;
+}
 
 input:hover {
   color: black;

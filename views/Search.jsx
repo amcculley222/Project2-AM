@@ -40,7 +40,7 @@ class Search extends React.Component {
                     <input type="hidden" name="genre" value={item.genre} />
                     <input type="hidden" name="id" value={item.id} />
                     <input
-                      type="hidden"
+                      type="submit"
                       name="cover_image"
                       value={item.cover_image}
                     />

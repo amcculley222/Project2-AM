@@ -7,6 +7,7 @@ const DefaultLayout = require("./layout/default");
 class Playlist extends React.Component {
   render() {
     const { songs } = this.props;
+
     const shuffledSongs = songs.sort(() => Math.random() - 0.5);
     return (
       <div className="w-full" title="Home Page">
@@ -79,9 +80,11 @@ class Playlist extends React.Component {
               <div style={{ position: "relative" }}>
                 <img src={song.cover_image} className="mx-auto" />
               </div>
-              <div className="pt-2 text-white break-all text-center">
-                {song.title}
-              </div>
+              <a href={`/song/${song._id}`}>
+                <div className="pt-2 text-white break-all text-center">
+                  {song.title}
+                </div>
+              </a>
               <form
                 action={`/song/${song._id.toString()}?_method=DELETE`}
                 method="POST"
