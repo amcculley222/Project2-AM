@@ -2,7 +2,6 @@ const session = require("express-session");
 const React = require("react");
 const axios = require("axios");
 const Song = require("../controllers/songController");
-const DefaultLayout = require("./layout/default");
 
 class Playlist extends React.Component {
   render() {
@@ -78,7 +77,16 @@ class Playlist extends React.Component {
               className="w-full md:w-1/4 px-4 py-6 text-center"
             >
               <div style={{ position: "relative" }}>
-                <img src={song.cover_image} className="mx-auto" />
+                <img
+                  src={song.cover_image}
+                  className="mx-auto"
+                  style={{
+                    height: 200,
+                    width: 200,
+                    border: "5px solid black",
+                    borderRadius: "50%",
+                  }}
+                />
               </div>
               <a href={`/song/${song._id}`}>
                 <div className="pt-2 text-white break-all text-center">

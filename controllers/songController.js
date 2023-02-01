@@ -31,10 +31,8 @@ router.delete("/:_id", (req, res) => {
 
 //Show
 router.get("/:_id", (req, res) => {
-  console.log("here");
   const { _id } = req.params;
   Song.findById(_id, (error, foundSong) => {
-    console.log(foundSong);
     res.render("Song", {
       song: foundSong,
     });
