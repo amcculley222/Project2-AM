@@ -1,3 +1,4 @@
+const { query } = require("express");
 const React = require("react");
 
 class Search extends React.Component {
@@ -11,8 +12,9 @@ class Search extends React.Component {
           <a className="text-white p-2 ml-0" href="/">
             {"<"}
           </a>
-          <span className="font-bold p-2 mx-auto">Search Results</span>
+          <span className="font-bold mx-auto">Search Results</span>
         </h1>
+        <hr className="w-full" />
 
         <div className="flex flex-wrap">
           {results ? (

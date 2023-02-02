@@ -107,6 +107,10 @@ button[type="search"] {
   color: white;
 }
 
+li {
+  list-style-type: circle;
+}
+
 button:hover[type="search"] {
   background-color: gray;
   color: white;
