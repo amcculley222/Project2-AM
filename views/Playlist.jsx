@@ -6,7 +6,9 @@ const Song = require("../controllers/songController");
 class Playlist extends React.Component {
   render() {
     const { songs } = this.props;
-
+    const handleChange = (event) => {
+      setStep(event.target.value);
+    };
     const shuffledSongs = songs.sort(() => Math.random() - 0.5);
     return (
       <div className="w-full" title="Home Page">
@@ -50,19 +52,22 @@ class Playlist extends React.Component {
         </div>
         <div></div>
 
-        <div className="text-white flex justify-center p-2 mx-3">
+        <form className="text-white flex justify-center p-2 mx-3">
           <p className="p-2">Chill</p>
+
           <input
             type="range"
             className="form-range w-3/4"
             min={0}
             max={4}
+            step={1}
             id="customRange2"
+            onChange={handleChange}
           />
           <div className="flex justify-between">
             <p className="p-2">Party</p>
           </div>
-        </div>
+        </form>
 
         <div className="p-4"></div>
         <div className="flex justify-center">
@@ -77,16 +82,18 @@ class Playlist extends React.Component {
               className="w-full md:w-1/4 px-4 py-6 text-center"
             >
               <div style={{ position: "relative" }}>
-                <img
-                  src={song.cover_image}
-                  className="mx-auto"
-                  style={{
-                    height: 200,
-                    width: 200,
-                    border: "5px solid black",
-                    borderRadius: "50%",
-                  }}
-                />
+                <button type="submit" action="/playlist" method="POST">
+                  <img
+                    src={song.cover_image}
+                    className="mx-auto"
+                    style={{
+                      height: 200,
+                      width: 200,
+                      border: "5px solid black",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </button>
               </div>
               <a href={`/song/${song._id}`}>
                 <div className="pt-2 text-white break-all text-center">
@@ -102,6 +109,13 @@ class Playlist extends React.Component {
             </div>
           ))}
         </div>
+        {/* <div className="p-12"></div>
+        <footer
+          className="w-full text-white opacity-30 bg-black h-20 fixed bottom-0"
+          style={{
+            borderRadius: "5%",
+          }}
+        ></footer> */}
       </div>
     );
   }

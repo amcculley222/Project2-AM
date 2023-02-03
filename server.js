@@ -77,47 +77,6 @@ app.get("/", (req, res) => {
   res.redirect("/song");
 });
 
-// app.get("/authorize", function (req, res) {
-//   var oAuth = new Discogs().oauth();
-//   oAuth.getRequestToken(
-//     consumerKey,
-//     consumerSecret,
-//     `http://localhost:${3000}/callback`,
-//     function (err, requestData) {
-//       // Persist "requestData" here so that the callback handler can
-//       // access it later after returning from the authorize url
-//       req.session.requestData = requestData;
-//       res.redirect(requestData.authorizeUrl);
-//     }
-//   );
-// });
-
-// app.get("/callback", function (req, res) {
-//   var oAuth = new Discogs(req.session.requestData).oauth();
-//   oAuth.getAccessToken(
-//     req.query.oauth_verifier, // Verification code sent back by Discogs
-//     function (err, accessData) {
-//       // Persist "accessData" here for following OAuth calls
-//       req.session.accessData = accessData;
-//       res.redirect("/identify");
-//     }
-//   );
-// });
-
-// app.get("/identify", function (req, res) {
-//   var dis = new Discogs(req.session.accessData);
-//   dis.getIdentity(function (err, data) {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       res.render("Playlist");
-//       console.log(data);
-//     }
-//   });
-// });
-
-// app.use("/playlist", playlistController);
-
 // Listen on the port
 app.listen(PORT, () => {
   console.log(`listening on port:${PORT} http://localhost:${PORT}/`);

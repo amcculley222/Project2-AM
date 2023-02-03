@@ -6,12 +6,14 @@ const Song = require("../models/songs");
 
 //edit these to be based on slider
 
-const getChill0 = () => {
+//Chill
+router.get("/", async (req, res) => {
   Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
-    console.log(songs);
-    res.redirect("/song");
+    res.render("Playlist", { songs: songs });
   });
-};
+});
+
+//Folk, World, & Country
 
 const getChill1 = () => {
   Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
