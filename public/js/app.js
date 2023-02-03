@@ -54,8 +54,8 @@ moodRange.addEventListener("change", async () => {
           button.setAttribute("method", "POST");
           img.setAttribute("src", songs[i].cover_image);
           img.classList.add("mx-auto");
-          img.style.height = "200";
-          img.style.width = "200";
+          img.style.height = "200px";
+          img.style.width = "200px";
           img.style.border = "5px solid black";
           img.style.borderRadius = "50%";
           a.setAttribute("href", `/song/${songs[i]._id}`);

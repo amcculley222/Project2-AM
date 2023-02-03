@@ -111,6 +111,12 @@ li {
   list-style-type: circle;
 }
 
+.song {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+}
+
 button:hover[type="search"] {
   background-color: gray;
   color: white;
