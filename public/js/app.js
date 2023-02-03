@@ -12,18 +12,18 @@ const moods = {
     "Electronic",
     "Hip Hop",
     "Pop",
+    "Hip Hop,Pop",
   ],
-  3: ["Pop"],
+  3: ["Pop", "Hip Hop,Pop"],
   4: ["Rock", "Electronic"],
 };
-console.log(parent);
 moodRange.addEventListener("change", async () => {
   const vibes = moods[moodRange.value];
   try {
     const parentdiv = document.createElement("div");
     parentdiv.id = "art";
     let filteredSongs = [];
-    const res = await fetch(`http://localhost:3000/search`);
+    const res = await fetch(`/search`);
     const data = await res.json();
     const songs = data.songs;
 
@@ -96,3 +96,11 @@ playSong.addEventListener("click", (e) => {
     spinRecord.classList.toggle("animate-spin");
   }
 });
+
+// parent.addEventListener("click", (e) => {
+//   const record = e.target.id;
+//   if (record.includes(`_`)) {
+//     const spinRecord = document.getElementById(record);
+//     spinRecord.classList.toggle("animate-spin");
+//   }
+// });
