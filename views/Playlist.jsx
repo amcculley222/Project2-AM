@@ -6,9 +6,25 @@ const DefaultLayout = require("./layout/default");
 
 class Playlist extends React.Component {
   render() {
-    const { songs } = this.props;
+    const { songs, mood } = this.props;
+    let shuffledSongs = songs.sort(() => Math.random() - 0.5);
+    // shuffledSongs = shuffledSongs?.map((el, idx) => {
+    //   let filteredSongs = [];
 
-    const shuffledSongs = songs?.sort(() => Math.random() - 0.5);
+    //   if (mood) {
+    //     const vibes = moods[mood];
+
+    //     for (let i = 0; i < vibes.length; i++) {
+    //       console.log(vibes[i]);
+    //       console.log(el.genre);
+    //       if (el.genre === vibes[i]) {
+    //         filteredSongs.push(el);
+    //       }
+    //     }
+    //   }
+    //   console.log(filteredSongs);
+    //   return filteredSongs;
+    // });
     return (
       <DefaultLayout title={"Home Page"}>
         <div className="w-full">
@@ -71,19 +87,19 @@ class Playlist extends React.Component {
           </div>
           <h2 className="flex justify-center text-white text-xl">My Songs </h2>
           <div className="p-4"></div>
-          <div className="flex flex-wrap">
+          <div id="art" className="flex flex-wrap">
             {shuffledSongs?.map((song, i) => (
               <div
                 key={song._id.toString()}
-                className="w-full md:w-1/4 px-4 py-6 text-center"
+                aria-label={song.genre}
+                className={` w-full md:w-1/4 px-4 py-6 text-center`}
               >
-                {" "}
                 <div style={{ position: "relative" }}>
                   <button type="submit" action="/playlist" method="POST">
                     <img
                       src={song.cover_image}
-                      className="mx-auto"
-                      id="art"
+                      id={`record_${i}`}
+                      className={`mx-auto`}
                       style={{
                         height: 200,
                         width: 200,

@@ -35,7 +35,7 @@ class Search extends React.Component {
                           borderRadius: "50%",
                         }}
                       />
-                      <div className="pt-2 break-all text-center">
+                      <div className="text-white pt-2 break-all text-center">
                         {item.title}
                       </div>
                     </a>
