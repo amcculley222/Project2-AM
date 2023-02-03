@@ -4,7 +4,18 @@ Get music from API and add to your playlist, then filter your playlist based on 
 
 ## ScreenShots
 
-Screenshots
+The home screen shows all of your songs added to the playlist
+<img src="./images/Home.png">
+
+Clicking on a song will spin the record and "play" the song
+<img src="./images/play.png">
+Using the seach bar you can look for all music in the Dicogs API database
+<img src="./images/search.png">
+You can then add these songs to your playlist
+Once a song is on your playlist you can remove or click the song title for more details
+<img src="./images/show.png">
+Depending on your mood you can filter using the slider
+<img src="./images/Filter.png">
 
 ## Restful Routes
 
@@ -22,7 +33,7 @@ Link: https://aux-app.herokuapp.com/song
 
 ## Next Steps
 
-Look for a new API that gives the ability to play songs rather than just showing them.
+Keep same functionality, but look for a new API with the ability to play music
 
 ## Technology Used
 

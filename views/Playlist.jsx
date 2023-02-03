@@ -26,7 +26,7 @@ class Playlist extends React.Component {
     //   return filteredSongs;
     // });
     return (
-      <DefaultLayout title={"Home Page"}>
+      <DefaultLayout title={"AUX"}>
         <div className="w-full">
           <h1 className="text-white flex justify-center p-4 text-xxl mx-auto">
             <img
