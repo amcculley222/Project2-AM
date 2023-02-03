@@ -1,4 +1,4 @@
-# Project 2
+# Aux App
 
 Get music from API and add to your playlist, then filter your playlist based on your mood with a slider
 
@@ -8,20 +8,17 @@ Screenshots
 
 ## Restful Routes
 
-| RESTful Routes | HTML       | Verb   |
-| -------------- | ---------- | ------ |
-| Index          | /          | GET    |
-| New            | //new      | GET    |
-| Delete         | //:id      | DELETE |
-| Update         | //:id      | PUT    |
-| Create         | /          | POST   |
-| Edit           | //:id/edit | GET    |
-| Show           | //:id      | GET    |
+| RESTful Routes | HTML     | Verb   |
+| -------------- | -------- | ------ |
+| Index          | /        | GET    |
+| New            | //:query | GET    |
+| Delete         | //\_:id  | DELETE |
+| Create         | /        | POST   |
+| Show           | //:\_id  | GET    |
 
 ## Getting Started
 
-Show and link
-Heroku Link
+Link: https://aux-app.herokuapp.com/song
 
 ## Next Steps
 
