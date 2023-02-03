@@ -20,6 +20,7 @@ const consumerSecret = process.env.Consumer_Secret;
 // const playlistController = require("./controllers/Playlist");
 const searchController = require("./controllers/searchController");
 const songController = require("./controllers/songController");
+const filterController = require("./controllers/filterController");
 // const playlistController = require("./controllers/playlistContoller");
 
 //include the method-override package place this where you instructor places it
@@ -71,6 +72,7 @@ app.engine("jsx", require("jsx-view-engine").createEngine());
 
 app.use("/search", searchController);
 app.use("/song", songController);
+app.use("/filter", filterController);
 
 // Index route
 app.get("/", (req, res) => {

@@ -5,17 +5,15 @@ class DefaultLayout extends React.Component {
     return (
       <html>
         <head>
-          <title></title>
+          <script src="/js/app.js" defer></script>
+          <script src="https://cdn.tailwindcss.com"></script>
           <link rel="stylesheet" href={"/css/app.css"} />
+          <title>{this.props.title}</title>
         </head>
-        <body>
-          <h1></h1>
-        </body>
+        <body>{this.props.children}</body>
       </html>
     );
   }
 }
-
-// https://img.freepik.com/premium-vector/play-button-icon-symbol-transparent-background-video-audio-player-vector-illustration_350225-118.jpg?w=2000
 
 module.exports = DefaultLayout;

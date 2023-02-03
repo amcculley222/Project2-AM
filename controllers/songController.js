@@ -4,10 +4,42 @@ const joi = require("joi");
 const axios = require("axios");
 const Song = require("../models/songs");
 
+// router.get("/", async (req, res) => {
+//   Song.find({}, (error, allSongs) => {
+//     res.render("Playlist", { songs: allSongs });
+//   });
+// });
+
+//edit these to be based on slide
+const moods = {
+  0: ["Folk, World, & Country"],
+  1: ["Hip Hop", "Funk / Soul"],
+  2: [
+    "Rock",
+    "Folk, World, & Country",
+    "Funk / Soul",
+    "Electronic",
+    "Hip Hop",
+    "Pop",
+  ],
+  3: ["Pop"],
+  4: ["Rock", "Electronic"],
+};
+
+//Chill
 router.get("/", async (req, res) => {
-  Song.find({}, (error, allSongs) => {
-    res.render("Playlist", { songs: allSongs });
-  });
+  const { mood } = req.query;
+  const filterMood = moods[mood];
+  if (mood) {
+    Song.find({ $or: [{ genre: filterMood }] }, (err, songs) => {
+      res.render("Playlist", { songs: songs });
+      console.log(songs);
+    });
+  } else {
+    Song.find({}, (error, songs) => {
+      res.render("Playlist", { songs: songs });
+    });
+  }
 });
 
 router.post("/", async (req, res) => {

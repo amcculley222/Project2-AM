@@ -3,44 +3,26 @@ const router = express.Router();
 const joi = require("joi");
 const axios = require("axios");
 const Song = require("../models/songs");
+const { string } = require("joi");
 
 //edit these to be based on slider
+const moods = {
+  0: ["Hip Hop", "Rap"],
+  1: ["Folk, World, & Country"],
+  2: ["Pop"],
+  3: ["Pop"],
+  4: ["Hip Hop", "Rap"],
+};
 
 //Chill
 router.get("/", async (req, res) => {
-  Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
+  const { mood } = req.query;
+  const filterMood = moods[mood];
+  console.log(filterMood);
+  Song.find({ $or: [{ genre: filterMood }] }, (err, songs) => {
+    console.log(songs.length);
     res.render("Playlist", { songs: songs });
   });
 });
-
-//Folk, World, & Country
-
-const getChill1 = () => {
-  Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
-    console.log(songs);
-    res.redirect("/song");
-  });
-};
-
-const getAll = () => {
-  Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
-    console.log(songs);
-    res.redirect("/song");
-  });
-};
-
-const getParty3 = () => {
-  Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
-    console.log(songs);
-    res.redirect("/song");
-  });
-};
-
-const getParty4 = () => {
-  Song.find({ $or: [{ genre: ["Hip Hip", "Rap"] }] }, (err, songs) => {
-    console.log(songs);
-    res.redirect("/song");
-  });
-};
 
 module.exports = router;
