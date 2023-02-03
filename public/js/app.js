@@ -1,5 +1,7 @@
 const playSong = document.querySelector("#art");
+const parent = document.querySelector("#part");
 const moodRange = document.getElementById("customRange2");
+const filterSong = document.querySelectorAll(".song");
 const moods = {
   0: ["Folk, World, & Country"],
   1: ["Hip Hop", "Funk / Soul"],
@@ -14,34 +16,74 @@ const moods = {
   3: ["Pop"],
   4: ["Rock", "Electronic"],
 };
-
+console.log(parent);
 moodRange.addEventListener("change", async () => {
-  const songs = playSong.children;
   const vibes = moods[moodRange.value];
   try {
+    const parentdiv = document.createElement("div");
+    parentdiv.id = "art";
     let filteredSongs = [];
-    await fetch(`/song?mood=${moodRange.value}`);
+    const res = await fetch(`http://localhost:3000/search`);
+    const data = await res.json();
+    const songs = data.songs;
+
     for (let i = 0; i < songs.length; i++) {
-      //   console.log(songs[i].ariaLabel === "Folk, World, & Country");
       for (let j = 0; j < vibes.length; j++) {
-        console.log(songs[i].ariaLabel, "-", vibes[j]);
-        if (songs[i].arialabel != vibes[j]) {
-          //   //   console.log(
-          //   //     typeof songs[i].ariaLabel,
-          //   //     songs[i].ariaLabel.length,
-          //   //     "-",
-          //   //     vibes[j]
-          //   //   );
-          //   playSong.removeChild(songs[i]);
-          filteredSongs.push(songs[i]);
-          console.log(songs[i]);
-          // } else {
-          //   //   console.log("else", songs[i].ariaLabel, vibes[j]);
-          //   playSong.appendChild(songs[i]);
+        if (songs[i].genre === vibes[j]) {
+          const outterdiv = document.createElement("div");
+          const innerdiv = document.createElement("div");
+          const button = document.createElement("button");
+          const img = document.createElement("img");
+          const a = document.createElement("a");
+          const adiv = document.createElement("div");
+          const form = document.createElement("form");
+          const input = document.createElement("input");
+          outterdiv.setAttribute("key", songs[i]._id.toString());
+          outterdiv.classList.add(
+            "song",
+            "w-full",
+            "md:w-1/4",
+            "px-4",
+            "py-6",
+            "text-center"
+          );
+
+          innerdiv.style.position = "relative";
+          button.setAttribute("type", "submit");
+          button.setAttribute("action", "/playlist");
+          button.setAttribute("method", "POST");
+          img.setAttribute("src", songs[i].cover_image);
+          img.classList.add("mx-auto");
+          img.style.height = "200";
+          img.style.width = "200";
+          img.style.border = "5px solid black";
+          img.style.borderRadius = "50%";
+          a.setAttribute("href", `/song/${songs[i]._id}`);
+          adiv.classList.add("pt-2", "text-white", "break-all", "text-center");
+          adiv.textContent = songs[i].title;
+          form.setAttribute(
+            "action",
+            `/song/${songs[i]._id.toString()}?_method=DELETE`
+          );
+          form.setAttribute("method", "POST");
+          input.setAttribute("type", "submit");
+          input.setAttribute("name", "");
+          input.setAttribute("value", "Remove");
+
+          button.appendChild(img);
+          innerdiv.appendChild(button);
+          a.appendChild(adiv);
+          form.appendChild(input);
+
+          outterdiv.appendChild(innerdiv);
+          outterdiv.appendChild(a);
+          outterdiv.appendChild(form);
+          parentdiv.appendChild(outterdiv);
         }
       }
     }
-    console.log(filteredSongs, filteredSongs.length);
+
+    parent.replaceChild(parentdiv, parent.childNodes[0]);
   } catch (error) {
     console.log(error);
   }

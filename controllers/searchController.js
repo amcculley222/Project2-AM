@@ -2,8 +2,15 @@ const express = require("express");
 const router = express.Router();
 const joi = require("joi");
 const axios = require("axios");
+const Song = require("../models/songs");
 
 const token = process.env.token;
+
+router.get("/", async (req, res) => {
+  Song.find({}, (error, songs) => {
+    res.json({ songs: songs });
+  });
+});
 
 router.get("/:query", async (req, res) => {
   const { query } = req.params;

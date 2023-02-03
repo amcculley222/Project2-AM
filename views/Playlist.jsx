@@ -28,11 +28,11 @@ class Playlist extends React.Component {
     return (
       <DefaultLayout title={"Home Page"}>
         <div className="w-full">
-          <h1 className="h-24 text-white flex justify-center p-4 text-xxl mx-auto">
+          <h1 className="text-white flex justify-center p-4 text-xxl mx-auto">
             <img
               style={{
-                height: 35,
-                width: 35,
+                height: 15,
+                width: 15,
                 borderRadius: 0,
               }}
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgiQJmfHIFhfr5YGuh_4FvfT4B26A3Y2OuDg&usqp=CAU"
@@ -87,42 +87,44 @@ class Playlist extends React.Component {
           </div>
           <h2 className="flex justify-center text-white text-xl">My Songs </h2>
           <div className="p-4"></div>
-          <div id="art" className="flex flex-wrap">
-            {shuffledSongs?.map((song, i) => (
-              <div
-                key={song._id.toString()}
-                aria-label={song.genre}
-                className={` w-full md:w-1/4 px-4 py-6 text-center`}
-              >
-                <div style={{ position: "relative" }}>
-                  <button type="submit" action="/playlist" method="POST">
-                    <img
-                      src={song.cover_image}
-                      id={`record_${i}`}
-                      className={`mx-auto`}
-                      style={{
-                        height: 200,
-                        width: 200,
-                        border: "5px solid black",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  </button>
-                </div>
-                <a href={`/song/${song._id}`}>
-                  <div className="pt-2 text-white break-all text-center">
-                    {song.title}
-                  </div>
-                </a>
-                <form
-                  action={`/song/${song._id.toString()}?_method=DELETE`}
-                  method="POST"
+          <div id="part">
+            <div id="art" className="flex flex-wrap">
+              {shuffledSongs?.map((song, i) => (
+                <div
+                  key={song._id.toString()}
+                  aria-label={song.genre}
+                  className={`song w-full md:w-1/4 px-4 py-6 text-center`}
                 >
-                  {" "}
-                  <input type="submit" name="" value="Remove" />
-                </form>{" "}
-              </div>
-            ))}
+                  <div style={{ position: "relative" }}>
+                    <button type="submit" action="/playlist" method="POST">
+                      <img
+                        src={song.cover_image}
+                        id={`record_${i}`}
+                        className={`mx-auto`}
+                        style={{
+                          height: 200,
+                          width: 200,
+                          border: "5px solid black",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </button>
+                  </div>
+                  <a href={`/song/${song._id}`}>
+                    <div className="pt-2 text-white break-all text-center">
+                      {song.title}
+                    </div>
+                  </a>
+                  <form
+                    action={`/song/${song._id.toString()}?_method=DELETE`}
+                    method="POST"
+                  >
+                    {" "}
+                    <input type="submit" name="" value="Remove" />
+                  </form>{" "}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </DefaultLayout>
