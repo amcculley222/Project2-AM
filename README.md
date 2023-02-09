@@ -2,6 +2,10 @@
 
 Get music from API and add to your playlist, then filter your playlist based on your mood with a slider
 
+## Getting Started
+
+Link: https://aux-app.herokuapp.com/song
+
 ## ScreenShots
 
 The home screen shows all of your songs added to the playlist
@@ -27,15 +31,23 @@ Depending on your mood you can filter using the slider
 | Create         | /        | POST   |
 | Show           | //:\_id  | GET    |
 
-## Getting Started
 
-Link: https://aux-app.herokuapp.com/song
 
 ## Next Steps
 
 Keep same functionality, but look for a new API with the ability to play music
 
 ## Technology Used
+<li>
+MongoDB
+express
+JSX
+JavaScript
+TailWind
+express-session
+jsx-view-engine
+Discogs API
+</li>
 
 ```mermaid
 sequenceDiagram
